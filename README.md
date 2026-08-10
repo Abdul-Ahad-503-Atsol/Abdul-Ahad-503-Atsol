@@ -1,4 +1,4 @@
-# Abdul-Ahad-503-Atsol
+# Abdul Ahad
 
 > Learning velocity and project potential.
 
