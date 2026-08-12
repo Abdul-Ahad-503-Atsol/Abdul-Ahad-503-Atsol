@@ -77,7 +77,38 @@ Build → Break → Learn → Improve → Repeat
 🎮 COMMIT ARCADE
 <div align="center">
 Your GitHub activity — gamified.
-<img src="./assets/commit-arcade.svg" alt="Abdul Ahad Commit Arcade" width="95%"> <br> <sub> ⚡ Automatically generated from repository activity · 🔄 Updated by GitHub Actions </sub> </div> <br>
+<div align="center">
+
+## 🐍 CONTRIBUTION SNAKE
+
+<p>
+  Watch the snake eat my GitHub contributions.
+</p>
+
+<picture>
+  <source
+    media="(prefers-color-scheme: dark)"
+    srcset="https://raw.githubusercontent.com/Abdul-Ahad-503-Atsol/Abdul-Ahad-503-Atsol/output/github-contribution-grid-snake-dark.svg"
+  />
+
+  <source
+    media="(prefers-color-scheme: light)"
+    srcset="https://raw.githubusercontent.com/Abdul-Ahad-503-Atsol/Abdul-Ahad-503-Atsol/output/github-contribution-grid-snake.svg"
+  />
+
+  <img
+    alt="GitHub Contribution Snake"
+    src="https://raw.githubusercontent.com/Abdul-Ahad-503-Atsol/Abdul-Ahad-503-Atsol/output/github-contribution-grid-snake.svg"
+    width="95%"
+  />
+</picture>
+
+<br>
+
+<sub>🐍 Automatically generated from my GitHub contribution graph.</sub>
+
+</div>
+<br> <sub> ⚡ Automatically generated from repository activity · 🔄 Updated by GitHub Actions </sub> </div> <br>
 🏆 Current Missions
 <table align="center"> <tr> <td align="center">🟢<br><b>Build</b><br><sub>Keep creating</sub></td> <td align="center">🔵<br><b>Ship</b><br><sub>Release useful projects</sub></td> <td align="center">🟣<br><b>Learn</b><br><sub>Master difficult concepts</sub></td> <td align="center">🟠<br><b>Contribute</b><br><sub>Open source</sub></td> <td align="center">🔴<br><b>Repeat</b><br><sub>Never stop</sub></td> </tr> </table>
 📊 GITHUB DASHBOARD
