@@ -114,7 +114,22 @@ Your GitHub activity — gamified.
 📊 GITHUB DASHBOARD
 <div align="center"> <img src="https://github-readme-stats.vercel.app/api?username=Abdul-Ahad-503-Atsol&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=00F7FF&icon_color=00FF88&text_color=FFFFFF&rank_icon=github" height="180"> <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Abdul-Ahad-503-Atsol&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=00F7FF&text_color=FFFFFF" height="180"> </div> <br> <div align="center"> <img src="https://streak-stats.demolab.com?user=Abdul-Ahad-503-Atsol&theme=tokyonight&hide_border=true&background=0D1117&ring=00F7FF&fire=FF6B35&currStreakLabel=00F7FF" width="70%"> </div>
 🐍 CONTRIBUTION SNAKE
-<div align="center"> <img src="./assets/github-contribution-grid-snake.svg" alt="GitHub Contribution Snake" width="95%"> <br>
+<div align="center"> <div align="center">
+
+## 🐍 CONTRIBUTION SNAKE
+
+<sub>Public + private contribution activity</sub>
+
+<br><br>
+
+<img
+  src="./assets/contribution-calendar.svg"
+  alt="Abdul Ahad GitHub Contribution Calendar"
+  width="95%"
+>
+
+</div>
+ <br>
 
 <sub>Every square represents another step forward.</sub>
 
