@@ -1,8 +1,8 @@
-name: Generate Contribution Snake
+name: Private Contribution Snake
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 */6 * * *"
 
   workflow_dispatch:
 
@@ -18,18 +18,206 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Generate snake
-        uses: Platane/snk/svg-only@v3
-        with:
-          github_user_name: Abdul-Ahad-503-Atsol
-          outputs: |
-            dist/github-contribution-grid-snake.svg?palette=github-dark
-            dist/github-contribution-grid-snake-dark.svg?palette=github-dark
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Publish snake
-        uses: crazy-max/ghaction-github-pages@v3.1.0
-        with:
-          build_dir: dist
-          target_branch: output
+      - name: Fetch GitHub contribution calendar
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.Name }}
+        run: |
+          python3 <<'PY'
+          import json
+          import os
+          import urllib.request
+
+          username = "Abdul-Ahad-503-Atsol"
+
+          query = """
+          query($login: String!) {
+            user(login: $login) {
+              contributionsCollection {
+                contributionCalendar {
+                  totalContributions
+                  weeks {
+                    contributionDays {
+                      date
+                      contributionCount
+                      color
+                    }
+                  }
+                }
+              }
+            }
+          }
+          """
+
+          variables = {
+              "login": username
+          }
+
+          payload = json.dumps({
+              "query": query,
+              "variables": variables
+          }).encode("utf-8")
+
+          request = urllib.request.Request(
+              "https://api.github.com/graphql",
+              data=payload,
+              headers={
+                  "Authorization": f"Bearer {os.environ['GH_TOKEN']}",
+                  "Content-Type": "application/json",
+                  "User-Agent": "Abdul-Ahad-GitHub-Snake"
+              }
+          )
+
+          with urllib.request.urlopen(request) as response:
+              data = json.loads(response.read().decode("utf-8"))
+
+          if "errors" in data:
+              print(json.dumps(data["errors"], indent=2))
+              raise SystemExit("GitHub GraphQL request failed")
+
+          calendar = data["data"]["user"]["contributionsCollection"]["contributionCalendar"]
+
+          with open("contributions.json", "w") as f:
+              json.dump(calendar, f, indent=2)
+
+          print(
+              "Total contributions:",
+              calendar["totalContributions"]
+          )
+
+          PY
+
+      - name: Generate contribution SVG
+        run: |
+          mkdir -p assets
+
+          python3 <<'PY'
+          import json
+          import math
+
+          with open("contributions.json") as f:
+              calendar = json.load(f)
+
+          weeks = calendar["weeks"]
+
+          cell = 14
+          gap = 4
+
+          left = 40
+          top = 60
+
+          width = left + len(weeks) * (cell + gap) + 30
+          height = top + 7 * (cell + gap) + 50
+
+          bg = "#0D1117"
+          empty = "#161B22"
+          border = "#30363D"
+
+          svg = f'''
+          <svg xmlns="http://www.w3.org/2000/svg"
+               width="{width}"
+               height="{height}"
+               viewBox="0 0 {width} {height}">
+
+            <rect width="100%" height="100%"
+                  rx="18"
+                  fill="{bg}"/>
+
+            <text x="40"
+                  y="32"
+                  fill="#00F7FF"
+                  font-family="monospace"
+                  font-size="16"
+                  font-weight="bold">
+              ABDUL AHAD • CONTRIBUTION SNAKE
+            </text>
+          '''
+
+          colors = [
+              "#161B22",
+              "#0E4429",
+              "#006D32",
+              "#26A641",
+              "#39D353"
+          ]
+
+          for week_index, week in enumerate(weeks):
+
+              days = week["contributionDays"]
+
+              for day in days:
+
+                  date = day["date"]
+                  count = day["contributionCount"]
+
+                  # GitHub-style contribution levels
+                  if count == 0:
+                      color = colors[0]
+                  elif count <= 3:
+                      color = colors[1]
+                  elif count <= 6:
+                      color = colors[2]
+                  elif count <= 9:
+                      color = colors[3]
+                  else:
+                      color = colors[4]
+
+                  weekday = day.get("weekday", 0)
+
+                  x = left + week_index * (cell + gap)
+                  y = top + weekday * (cell + gap)
+
+                  svg += f'''
+                  <rect
+                    x="{x}"
+                    y="{y}"
+                    width="{cell}"
+                    height="{cell}"
+                    rx="3"
+                    fill="{color}"
+                    stroke="{border}"
+                    stroke-width="0.5">
+
+                    <title>
+                      {date}: {count} contributions
+                    </title>
+
+                  </rect>
+                  '''
+
+          total = calendar["totalContributions"]
+
+          svg += f'''
+            <text x="40"
+                  y="{height - 18}"
+                  fill="#8B949E"
+                  font-family="monospace"
+                  font-size="12">
+              {total} contributions • Public + private activity
+            </text>
+
+          </svg>
+          '''
+
+          with open("assets/contribution-calendar.svg", "w") as f:
+              f.write(svg)
+
+          print("SVG generated successfully.")
+
+          PY
+
+      - name: Commit updated contribution graph
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add assets/contribution-calendar.svg
+
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: update contribution calendar"
+            git push
+          fi
