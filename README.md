@@ -6,7 +6,7 @@
 
 </div>
 
-![About](https://capsule-render.vercel.app/api?type=rect&color=auto&height=40&section=header&text=About%20Me&fontSize=22&fontColor=fff)
+![About](https://capsule-render.vercel.app/api?type=rect&color=auto&height=40&section=header&text=About%20Me&fontSize=22&fontColor=000)
 
 Computer Science graduate from National Textile University with strong expertise in software engineering, artificial intelligence, and full stack application development. Experienced in developing web and mobile applications through academic projects, internships, and professional software development, particularly with React.js, TypeScript, and Python. Passionate about advancing knowledge in Artificial Intelligence and Machine Learning.
 
